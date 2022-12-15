@@ -2,12 +2,12 @@
 
 ### Results of Localization Module
 ![](/data/github/org.gif) <br/>
-Orginal point clouds in two steps.
+Orginal point clouds in two steps
 ![](/data/github/ours_icp_kabsch.gif)<br/>
-Matched point clouds using our algorithm.
+Matched point clouds using our algorithm
 ![](/data/github/icp.gif)<br/>
-Matched point clouds using icp algorithm.
+Matched point clouds using icp algorithm
 
 ### Results of auto-calibration Module
 ![](/data/github/auto-calib.gif)<br/>
-Auto calibration before and after optimization.
+Auto calibration before and after optimization
