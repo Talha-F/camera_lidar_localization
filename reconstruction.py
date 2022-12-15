@@ -13,13 +13,16 @@ def plot_points(img,
                 point, 
                 txt=None,
                 radius=1,
-                is_text=False):
+                is_text=False,
+                thickness=-1,
+                is_rand_color=False):
     
+    random_color = np.random.randint(0, 256, (1, 3)).tolist() if is_rand_color else [[0, 0, 255]]
     img = cv2.circle(img, 
                      (int(point[0]), int(point[1])),
                      radius=radius,
-                     color=(0, 0, 255),
-                     thickness=-1)
+                     color=random_color[0],
+                     thickness=thickness)
     if is_text:
         img = cv2.putText(img,
                           text=txt,
@@ -35,22 +38,28 @@ def draw_epipolar_lines(img,
                         point1,
                         point2,
                         radius=2,
-                        thickness=2):
-    random_color = np.random.randint(0, 255, (3, )).tolist()
+                        thickness=2,
+                        is_rand_color=True):
+    if not is_rand_color:
+        random_color = [0, 0, 255]
+    else:
+        random_color = np.random.randint(0, 255, (3, )).tolist()
+    end_point_1 = (int(point1[0]), int(point1[1]))
+    end_point_2 = (int(img.shape[1]//2) + int(point2[0]), int(point2[1]))
+
     img =  cv2.circle(img, 
-                      (int(point1[0]), int(point1[1])),
+                      end_point_1,
                       radius=radius,
                       color=random_color,
                       thickness=-1)
     img = cv2.circle(img,
-                     (int(img.shape[1]//2 + point2[0]), 
-                      int(point2[1])),
+                     end_point_2,
                      radius=radius,
                      color=random_color,
                      thickness=-1)
     img = cv2.line(img,
-                   (int(point1[0]), int(point1[1])),
-                   (int(point1[0]+img.shape[1]//2), int(point2[1])),
+                   end_point_1,
+                   end_point_2,
                    color=random_color,
                    thickness=thickness)
     return img
@@ -173,8 +182,8 @@ def extract_features(image_1,
                            image_2, keypoints_2, 
                            matches[:], 
                            image_2, flags=2)
-    cv2.imshow("features", img3)
-    cv2.waitKey(0)
+    # cv2.imshow("features", img3)
+    # cv2.waitKey(0)
     return pts1_req, pts2_req
 
 def reconstruct(image_folder_name_1,
